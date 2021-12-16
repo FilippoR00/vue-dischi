@@ -1,6 +1,7 @@
 <template>
     <div class="container">
-        <div class="row">
+        <div class="loader" v-if="!fullyCharged">Loading..</div>
+        <div class="row" v-if="fullyCharged">
             <div class="card_box" v-for="(track, index) in song" :key="index">
                 <Card :cardInfo='track'/>
             </div>
@@ -19,36 +20,55 @@ export default {
     },
     data() {
         return {
-            song: null
+            song: null,
+            fullyCharged: false
         }
     },
     created() {
         axios.get('https://flynn.boolean.careers/exercises/api/array/music')
         .then((response) => {
             this.song = response.data.response;
+            if (response.data.response.length == 10) {
+                this.fullyCharged = true;
+            }
         })
         .catch(function (error) {
             // handle error
             console.log(error);
         });
-}
+    }
 }
 </script>
 
 <style scoped lang="scss">
     @import 'src/assets/style/Global.scss';
-    .container .row{
-        padding: 70px 50px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 40px;
-        .card_box{
+    .container{
+        position: relative;
+        .loader{
             color: white;
-            text-align: center;
-            width: calc(100% / 5 - 40px);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-family: Arial, Helvetica, sans-serif;
+            font-size: 40px;
+            padding: 50px;
             background-color: $mainColor;
+            border-radius: 30px;
         }
-    }
+        .row{
+            padding: 70px 50px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            .card_box{
+                color: white;
+                text-align: center;
+                width: calc(100% / 5 - 40px);
+                font-family: Arial, Helvetica, sans-serif;
+                background-color: $mainColor;
+            }
+        }
+    }    
 </style>
