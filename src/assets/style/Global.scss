@@ -1,0 +1,22 @@
+// -----------
+// variabili
+// -----------
+
+$mainColor : #2e3a46;
+$secondaryColor : #1e2d3b;
+
+// -----------
+// global
+// -----------
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+// -----------
+// librerie
+// -----------
+
+@import '~bootstrap/scss/bootstrap.scss';
