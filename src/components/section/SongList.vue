@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <Search @genre="searchGenre"/>
+        <Search @genre="searchGenre" @auth="searchAuth"/>
         <div class="loader" v-if="!fullyCharged">Loading..</div>
         <div class="row" v-if="fullyCharged">
             <div class="card_box" v-for="(track, index) in songFiltered" :key="index">
@@ -25,7 +25,8 @@ export default {
         return {
             song: null,
             fullyCharged: false,
-            selected: ''
+            selectedGenre: '',
+            selectedAuth: '',
         }
     },
     created() {
@@ -43,14 +44,17 @@ export default {
     },
     methods: {
         searchGenre(payload){
-            this.selected = payload;
+            this.selectedGenre = payload;
+        },
+        searchAuth(payload){
+            this.selectedAuth = payload;
         }
     },
     computed: {
         songFiltered() {
-            const array = this.song.filter( (elm) => {
-                return elm.genre.toLowerCase().includes(this.selected.toLowerCase()); // true o false
-            } );  // se è true mantengo il personaggio altrimenti lo scarto
+            let array = this.song.filter( (elm) => {
+                return (elm.genre.toLowerCase().includes(this.selectedGenre.toLowerCase()) && elm.author.toLowerCase().includes(this.selectedAuth.toLowerCase()));
+            } );
             return array;
         }
     }

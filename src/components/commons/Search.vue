@@ -2,11 +2,26 @@
     <div class="search-bar">
         <form class="my-3">
             <span>Seleziona il genere: </span>
-            <select name="Genre" v-model="selected" @change="$emit('genre', selected)">
+            <select name="Genre" v-model="genreSelected" @change="$emit('genre', genreSelected)">
                 <option value="Rock">Rock</option>
                 <option value="Pop">Pop</option>
                 <option value="Jazz">Jazz</option>
                 <option value="Metal">Metal</option>
+            </select>
+        </form>
+        <form class="my-3">
+            <span>Seleziona l'artista: </span>
+            <select name="Auth" v-model="authSelected" @change="$emit('auth', authSelected)">
+                <option value="Bon Jovi">Bon Jovi</option>
+                <option value="Queen">Queen</option>
+                <option value="Sting">Sting</option>
+                <option value="Steve Gadd Band">Steve Gadd Band</option>
+                <option value="Iron Maiden">Iron Maiden</option>
+                <option value="Eric Clapton">Eric Clapton</option>
+                <option value="Deep Purple">Deep Purple</option>
+                <option value="Metallica">Metallica</option>
+                <option value="Dave Weckl">Dave Weckl</option>
+                <option value="Michael Jacjson">Michael Jacjson</option>
             </select>
         </form>
     </div>
@@ -17,7 +32,8 @@ export default {
     name: 'Search',
     data() {
         return {
-            selected : '',
+            genreSelected : '',
+            authSelected : ''
         }
     } 
 }
@@ -27,7 +43,8 @@ export default {
     @import 'src/assets/style/Global.scss';
     .search-bar{
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
         form{
             color: white;
             text-transform: uppercase;
@@ -37,7 +54,7 @@ export default {
                 border-radius: 10px;
                 color: white;
                 background-color: $mainColor;
-                width: 100px;
+                width: 200px;
                 text-align: center;
                 padding: 5px;
                 font-size: 18px;
