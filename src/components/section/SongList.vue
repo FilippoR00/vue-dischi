@@ -1,8 +1,9 @@
 <template>
     <div class="container">
+        <Search @genre="searchGenre"/>
         <div class="loader" v-if="!fullyCharged">Loading..</div>
         <div class="row" v-if="fullyCharged">
-            <div class="card_box" v-for="(track, index) in song" :key="index">
+            <div class="card_box" v-for="(track, index) in songFiltered" :key="index">
                 <Card :cardInfo='track'/>
             </div>
         </div>
@@ -11,17 +12,20 @@
 
 <script>
 import Card from '../commons/Card.vue'
+import Search from '../commons/Search.vue'
 import axios from 'axios';
 
 export default {
     name: 'SongList',
     components: {
-        Card
+        Card,
+        Search
     },
     data() {
         return {
             song: null,
-            fullyCharged: false
+            fullyCharged: false,
+            selected: ''
         }
     },
     created() {
@@ -36,6 +40,19 @@ export default {
             // handle error
             console.log(error);
         });
+    },
+    methods: {
+        searchGenre(payload){
+            this.selected = payload;
+        }
+    },
+    computed: {
+        songFiltered() {
+            const array = this.song.filter( (elm) => {
+                return elm.genre.toLowerCase().includes(this.selected.toLowerCase()); // true o false
+            } );  // se è true mantengo il personaggio altrimenti lo scarto
+            return array;
+        }
     }
 }
 </script>
@@ -57,10 +74,9 @@ export default {
             border-radius: 30px;
         }
         .row{
-            padding: 70px 50px;
+            padding: 30px 50px;
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
             gap: 40px;
             .card_box{
                 color: white;

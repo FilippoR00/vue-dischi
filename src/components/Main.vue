@@ -19,6 +19,6 @@ export default {
     @import '../assets/style/global.scss';
     div{
         background-color: $secondaryColor;
-        min-height: 100vh;
+        min-height: calc(100vh - 70px);
     }
 </style>
